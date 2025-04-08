@@ -25,7 +25,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/Ag
  * as well as depositing & withdrawing collateral
  * @notice This contract is very loosely based on the MakerDAO DSS (DAI) system.
  */
-contract DECEngine is ReentrancyGuard {
+contract DSCEngine is ReentrancyGuard {
     ///////////////////
     // Errors
     ///////////////////
