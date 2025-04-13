@@ -7,7 +7,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 /**
- * @title DECEngine
+ * @title DSCEngine
  * @author Ashish Bhintade
  *
  * The system is designed to be as minimal as possible and have the tokens maintain a 1 token == $1 peg.
@@ -29,11 +29,11 @@ contract DSCEngine is ReentrancyGuard {
     ///////////////////
     // Errors
     ///////////////////
-    error DECEngine__NeedsMoreThanZero();
-    error DECEngine__TokenAddressesAndPriceFeedAddressesMustBeSameLength();
+    error DSCEngine__NeedsMoreThanZero();
+    error DSCEngine__TokenAddressesAndPriceFeedAddressesMustBeSameLength();
     error DSCEngine__NotAllowedToken();
     error DSCEngine__TransferFailed();
-    error DSCENgine__BreaksHealthFactor(uint256 healthFactor);
+    error DSCEngine__BreaksHealthFactor(uint256 healthFactor);
     error DSCEngine__MintFailed();
     error DSCEngine__HealthFactorOk();
     error DSCEngine__HealthFactorNotImproved();
@@ -68,7 +68,7 @@ contract DSCEngine is ReentrancyGuard {
     ///////////////////
     modifier moreThanZero(uint256 amount) {
         if (amount == 0) {
-            revert DECEngine__NeedsMoreThanZero();
+            revert DSCEngine__NeedsMoreThanZero();
         }
         _;
     }
@@ -86,7 +86,7 @@ contract DSCEngine is ReentrancyGuard {
     constructor(address[] memory tokenAddresses, address[] memory priceFeedAddresses, address dscAddress) {
         //USD Price Feed
         if (tokenAddresses.length != priceFeedAddresses.length) {
-            revert DECEngine__TokenAddressesAndPriceFeedAddressesMustBeSameLength();
+            revert DSCEngine__TokenAddressesAndPriceFeedAddressesMustBeSameLength();
         }
         for (uint256 i = 0; i < tokenAddresses.length; i++) {
             s_priceFeeds[tokenAddresses[i]] = priceFeedAddresses[i];
@@ -262,7 +262,7 @@ contract DSCEngine is ReentrancyGuard {
     function _revertIfHealthFactorIsBroken(address user) internal view {
         uint256 userHealthFactor = _healthFactor(user);
         if (userHealthFactor < MIN_HEALTH_FACTOR) {
-            revert DSCENgine__BreaksHealthFactor(userHealthFactor);
+            revert DSCEngine__BreaksHealthFactor(userHealthFactor);
         }
     }
 

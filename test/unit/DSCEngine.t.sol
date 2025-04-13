@@ -38,7 +38,7 @@ contract DSCEngineTest is Test {
     function testRevertsIfCollateralZero() public {
         vm.prank(USER);
         ERC20Mock(weth).approve(address(dsce), AMOUNT_COLLATERAL);
-        vm.expectRevert(DSCEngine.DECEngine__NeedsMoreThanZero.selector);
+        vm.expectRevert(DSCEngine.DSCEngine__NeedsMoreThanZero.selector);
         dsce.depositCollateral(weth, 0);
         vm.stopPrank();
     }
